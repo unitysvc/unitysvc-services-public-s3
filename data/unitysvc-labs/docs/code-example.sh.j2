@@ -1,0 +1,5 @@
+#!/bin/bash
+# List files in the public dataset
+aws --endpoint-url {{ S3_GATEWAY_PUBLIC_URL }} \
+    --no-sign-request \
+    s3 ls s3://{{ SERVICE_NAME }}/ --max-items 10

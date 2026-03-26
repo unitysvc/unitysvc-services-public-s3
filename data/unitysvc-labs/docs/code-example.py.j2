@@ -1,0 +1,12 @@
+import boto3
+
+s3 = boto3.client('s3',
+    endpoint_url='{{ S3_GATEWAY_PUBLIC_URL }}',
+    aws_access_key_id='{{ API_KEY }}',
+    aws_secret_access_key='not-used',
+)
+
+# List files in the bucket
+response = s3.list_objects_v2(Bucket='{{ SERVICE_NAME }}', MaxKeys=5)
+for obj in response.get('Contents', []):
+    print(f"{obj['Key']}  ({obj['Size']} bytes)")
