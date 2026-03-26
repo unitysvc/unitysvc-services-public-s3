@@ -1,15 +1,15 @@
 {
-  "name": "open-crawl",
+  "name": "open-satellite",
   "schema": "offering_v1",
   "service_type": "content",
   "status": "ready",
   "time_created": "2026-03-26T00:00:00Z",
-  "description": "Common Crawl web archive \u2014 petabytes of raw web page data, extracted text, and metadata collected since 2008. Used for NLP training, web research, and data analysis. Each monthly crawl contains billions of web pages.",
+  "description": "NOAA GOES-16 satellite weather imagery. Real-time and archival geostationary weather satellite data including visible, infrared, and water vapor imagery covering the Western Hemisphere. Used for weather forecasting, climate research, and atmospheric science.",
   "tags": [
     "data",
-    "web",
-    "nlp",
-    "ml",
+    "satellite",
+    "weather",
+    "imagery",
     "open-data",
     "free"
   ],
@@ -25,9 +25,9 @@
   "upstream_access_config": {
     "AWS Public S3": {
       "access_method": "http",
-      "base_url": "https://commoncrawl.s3.amazonaws.com",
+      "base_url": "https://noaa-goes16.s3.amazonaws.com",
       "storage_type": "s3",
-      "bucket": "commoncrawl",
+      "bucket": "noaa-goes16",
       "region": "us-east-1"
     }
   }
