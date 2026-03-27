@@ -1,0 +1,71 @@
+{
+  "schema": "listing_v1",
+  "status": "ready",
+  "time_created": "2026-03-27T00:00:00Z",
+  "display_name": "Gutenberg Novels (AWS S3)",
+  "currency": "USD",
+  "list_price": {
+    "type": "constant",
+    "price": "0",
+    "description": "Free — public domain content"
+  },
+  "user_access_interfaces": {
+    "S3 Gateway": {
+      "access_method": "http",
+      "base_url": "${S3_GATEWAY_BASE_URL}/test-aws-s3"
+    }
+  },
+  "documents": {
+    "How to use this dataset": {
+      "category": "getting_started",
+      "description": "Guide to browsing and downloading Gutenberg novels through the S3 gateway",
+      "file_path": "../../docs/description.md",
+      "is_active": true,
+      "is_public": true,
+      "mime_type": "markdown"
+    },
+    "Python code example": {
+      "category": "code_example",
+      "description": "Example code to list and download novels",
+      "file_path": "../../docs/code-example.py.j2",
+      "is_active": true,
+      "is_public": true,
+      "meta": {
+        "requirements": [
+          "boto3"
+        ],
+        "output_contains": "connectivity ok"
+      },
+      "mime_type": "python"
+    },
+    "CLI code example": {
+      "category": "code_example",
+      "description": "Example using AWS CLI to browse novels",
+      "file_path": "../../docs/code-example.sh.j2",
+      "is_active": true,
+      "is_public": true,
+      "meta": {
+        "output_contains": "connectivity ok"
+      },
+      "mime_type": "bash"
+    },
+    "Project Gutenberg": {
+      "category": "api_reference",
+      "external_url": "https://www.gutenberg.org/",
+      "is_active": true,
+      "is_public": true,
+      "mime_type": "url"
+    },
+    "Connectivity test": {
+      "category": "connectivity_test",
+      "description": "Connectivity test for the S3 gateway endpoint",
+      "file_path": "../../docs/connectivity.sh.j2",
+      "is_active": true,
+      "is_public": false,
+      "meta": {
+        "output_contains": "connectivity ok"
+      },
+      "mime_type": "bash"
+    }
+  }
+}
