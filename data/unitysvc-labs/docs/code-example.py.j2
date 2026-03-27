@@ -1,22 +1,32 @@
 import boto3
 import os
 {% if local_testing %}
+{% if interface.get("access_key") %}
+# Local testing: access S3 with seller credentials
+s3 = boto3.client('s3',
+    endpoint_url=os.environ.get('S3_ENDPOINT', '{{ interface.s3_endpoint }}'),
+    region_name='{{ interface.region }}',
+    aws_access_key_id=os.environ['ACCESS_KEY'],
+    aws_secret_access_key=os.environ['SECRET_KEY'],
+)
+{% else %}
 from botocore import UNSIGNED
 from botocore.config import Config
 
 # Local testing: access public S3 bucket directly (no authentication needed)
 s3 = boto3.client('s3',
-    region_name='{{ offering.upstream_access_config["AWS Public S3"].region }}',
+    region_name='{{ interface.region }}',
     config=Config(signature_version=UNSIGNED),
 )
-bucket = '{{ offering.upstream_access_config["AWS Public S3"].bucket }}'
+{% endif %}
+bucket = '{{ interface.bucket }}'
+prefix = '{{ interface.get("base_path", "") }}'
 {% else %}
 # Access via UnitySVC S3 gateway
-# SERVICE_BASE_URL is e.g. http://localhost:9180/open-weather
-# boto3 needs endpoint_url=http://localhost:9180 and Bucket='open-weather'
 service_url = os.environ['SERVICE_BASE_URL']
-endpoint_url = service_url.rsplit('/', 1)[0]  # strip bucket path
-bucket = service_url.rsplit('/', 1)[1]        # extract bucket name
+endpoint_url = service_url.rsplit('/', 1)[0]
+bucket = service_url.rsplit('/', 1)[1]
+prefix = ''
 
 s3 = boto3.client('s3',
     endpoint_url=endpoint_url,
@@ -26,7 +36,10 @@ s3 = boto3.client('s3',
 {% endif %}
 
 # List files in the bucket
-response = s3.list_objects_v2(Bucket=bucket, MaxKeys=5)
+response = s3.list_objects_v2(Bucket=bucket, MaxKeys=5, Prefix=prefix)
 for obj in response.get('Contents', []):
-    print(f"{obj['Key']}  ({obj['Size']} bytes)")
+    key = obj['Key']
+    if prefix and key.startswith(prefix):
+        key = key[len(prefix):]
+    print(f"{key}  ({obj['Size']} bytes)")
 print("connectivity ok")
