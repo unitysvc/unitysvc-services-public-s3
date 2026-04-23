@@ -47,11 +47,6 @@
       "S3_RELAY_REGION": "",
       "S3_RELAY_ACCESS_KEY": "",
       "S3_RELAY_SECRET_KEY": ""
-    },
-    "ops_testing_parameters": {
-      "base_url": "https://s3.svcmarket.com",
-      "bucket": "test-relay",
-      "region": "us-east-1"
     }
   },
   "status": "ready",
